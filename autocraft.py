@@ -29,7 +29,6 @@ while not done:
     random.shuffle(possible_combs)
     curr_comb = possible_combs.pop(0)
     res = s.get(f'https://neal.fun/api/infinite-craft/pair?first={curr_comb[0]}&second={curr_comb[1]}', headers=headers).content.decode()
-    print(res)
     new_element = json.loads(res)["result"]
     isNew = json.loads(res)["isNew"]
     if new_element not in recipes.keys():
