@@ -21,15 +21,15 @@ headers = {
         'Sec-Fetch-Mode': 'cors',
         'Sec-Fetch-Site': 'same-origin',
         'Sec-GPC': '1',
+        'cookie' : 'cf_clearance=8NS2OdNhMMFW9DXvXGKey9aQ0Bq0aiSfxYQhd.UceTs-1710630112-1.0.1.1-b7uJlk2W.4Cn.sAbG4VjrPLuuZi1EpzgJkIaLvi.5gLzXwXrneFcSo34csJY5UnPHMHDKtOyPhUZ3Kbjg4cGrA; __cf_bm=U0_7aAfPhILhz2iBPkGEWMO.a9MNHCOe0a60qbwvcnc-1710631102-1.0.1.1-y8yjrAG.O0r7sTpYPIXYF4rLSm90BZcySWmSNlK6Jxo0B7DIAMGMpl5W0CfAyW6pffC85iqwPU7NgvAcpYkG1w'
     }
 
 s = requests.Session()
 done = False
 while not done:
-    random.shuffle(possible_combs)
-    curr_comb = possible_combs.pop(0)
-    res = s.get(f'https://neal.fun/api/infinite-craft/pair?first={curr_comb[0]}&second={curr_comb[1]}', headers=headers).content.decode()
-    print(res)
+    index = random.randint(0, len(possible_combs) -1)
+    curr_comb = possible_combs.pop(index)
+    res = s.get(f'https://neal.fun/api/infinite-craft/pair?first={curr_comb[0]}&second={curr_comb[1]}', headers=headers).content.decode("utf-8")
     new_element = json.loads(res)["result"]
     isNew = json.loads(res)["isNew"]
     if new_element not in recipes.keys():
@@ -42,6 +42,6 @@ while not done:
         possible_combs.extend([(new_element, i) for i in element_list])
     if isNew:
         done = True
-    print (f'{res}: ---{curr_comb}---, ======{len(possible_combs)}====== ----new? {isNew}')
-    time.sleep(.175)
+    print (f'{new_element}: ---{curr_comb}---, ======{len(possible_combs)}====== ----new? {isNew}')
+    time.sleep(.2)
 print(recipes.keys())
